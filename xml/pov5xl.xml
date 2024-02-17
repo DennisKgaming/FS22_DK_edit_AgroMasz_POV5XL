@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<vehicle type="plowPacker" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/vehicle.xsd">
+    <annotation>Copyright (C) GIANTS Software GmbH, All Rights Reserved.</annotation>
+	
+    <storeData>
+        <name>
+            <en>POV 5 XL DK edit</en></name>
+        <specs>
+            <neededPower>160</neededPower>
+            <workingWidth>2.5</workingWidth>
+            <combination filterCategory="weights" filterSpec="weight" filterSpecMin="900" filterSpecMax="1000"/>
+        </specs>
+        <functions>
+            <function>$l10n_function_plow</function>
+            <function>$l10n_function_wheelWeightsRecommended</function>
+        </functions>
+        <image>icons/store_pov5xl.dds</image>
+        <price>16000</price>
+        <lifetime>600</lifetime>
+        <rotation>0</rotation>
+        <brand>AGROMASZ</brand>
+        <category>DennisKtools</category>
+        <shopTranslationOffset>0 -0.011 0</shopTranslationOffset>
+        <shopRotationOffset>-0.045 0 0</shopRotationOffset>
+        <vertexBufferMemoryUsage>1697024</vertexBufferMemoryUsage>
+        <indexBufferMemoryUsage>277248</indexBufferMemoryUsage>
+        <textureMemoryUsage>2162688</textureMemoryUsage>
+        <instanceVertexBufferMemoryUsage>0</instanceVertexBufferMemoryUsage>
+        <instanceIndexBufferMemoryUsage>0</instanceIndexBufferMemoryUsage>
+        <audioMemoryUsage>0</audioMemoryUsage>
+    </storeData>
+    
+	<base>
+        <typeDesc>$l10n_typeDesc_plow</typeDesc>
+        <filename>i3d/pov5xl.i3d</filename>
+        <size width="4.8" length="6" lengthOffset="0.15"/>
+        <speedLimit value="17"/>
+        <components>
+            <component centerOfMass="-0.576 0.65 1" solverIterationCount="30" mass="1554"/>
+        </components>
+        <schemaOverlay attacherJointPosition="0 0" name="IMPLEMENT"/>
+        <sounds volumeFactor="0.5"/>
+        <mapHotspot type="TOOL"/>
+    </base>
+    
+	<wheels>
+        <wheelConfigurations>
+            <wheelConfiguration name="$l10n_configuration_valueDefault" price="0">
+                <wheels hasSurfaceSounds="false">
+                    <wheel filename="$data/shared/wheels/tires/bkt/AS504/26x12_00__12.xml" isLeft="true" hasTireTracks="true" hasParticles="true">
+                        <physics restLoad="0.6" repr="backWheelNode" useReprDirection="true" forcePointRatio="0.25" initialCompression="15" suspTravel="0.1" spring="35" damper="30" rotationDamping="0.006" frictionScale="2" yOffset="0.03" supportsWheelSink="false"/>
+                    </wheel>
+                </wheels>
+            </wheelConfiguration>
+        </wheelConfigurations>
+        <hubs>
+            <color0 useBaseColor="true"/>
+            <color1>SHARED_GREY3</color1>
+            <hub linkNode="backWheelNode" filename="$data/shared/wheels/hubs/hub_n6_1.xml" isLeft="true" scale="0.08 0.15 0.15" offset="0.010"/>
+        </hubs>
+    </wheels>
+    
+	<attachable allowFoldingWhileLowered="false">
+        <inputAttacherJoints>
+            <inputAttacherJoint node="attacherJoint" jointType="implement" topReferenceNode="topReferenceNode" upperRotationOffset="10" lowerRotLimitScale="0.1 0 0.6">
+                <distanceToGround lower="0.4" upper="1.2"/>
+            </inputAttacherJoint>
+        </inputAttacherJoints>
+        <support animationName="moveSupport"/>
+    </attachable>
+    
+	<connectionHoses>
+        <hose inputAttacherJointIndices="1" type="hydraulicIn" node="hydraulicIn01" adapterNode="hydraulicIn01_adapter" length="1.5" diameter="0.02">
+            <objectChange node="hydraulicIn01_detached" visibilityActive="false" visibilityInactive="true"/>
+        </hose>
+        <hose inputAttacherJointIndices="1" type="hydraulicOut" node="hydraulicOut01" adapterNode="hydraulicOut01_adapter" length="1.5" diameter="0.02">
+            <objectChange node="hydraulicOut01_detached" visibilityActive="false" visibilityInactive="true"/>
+        </hose>
+    </connectionHoses>
+    
+	<powerConsumer forceNode="pov5xl_main_component1" maxForce="20"/>
+    
+	<groundReferenceNodes>
+        <groundReferenceNode node="groundReferenceNode" threshold="0.80" forceFactor="1"/>
+        <groundReferenceNode node="groundReferenceNodeTop" threshold="0.05" forceFactor="0" depthNode="groundReferenceNodeTop"/>
+        <groundReferenceNode node="groundReferenceNodeBottom" threshold="0.05" forceFactor="0" depthNode="groundReferenceNodeBottom"/>
+    </groundReferenceNodes>
+    
+	<workAreas>
+        <workArea type="plow" functionName="processPlowArea">
+            <area startNode="workAreaStart" widthNode="workAreaWidth" heightNode="workAreaHeight"/>
+            <groundReferenceNode index="1"/>
+            <onlyActiveWhenLowered value="true"/>
+        </workArea>
+    </workAreas>
+    
+	<workParticles>
+        <particle>
+            <node node="smokeEmitterBottom" refNodeIndex="3" particleType="SOIL_SMOKE" emitCountScale="2" speedThreshold="2"/>
+            <node node="smokeEmitterTop" refNodeIndex="2" particleType="SOIL_SMOKE" emitCountScale="2" speedThreshold="2"/>
+        </particle>
+        <effect groundReferenceNodeIndex="3" speedThreshold="0">
+            <effectNode effectClass="PlowMotionPathEffect" effectType="PLOW" linkNode="plowEffectBottom01">
+                <motionPathEffect textureFilename="$data/vehicles/kverneland/ecomat/ecomatBottomShareArray.dds" numRows="6" rowLength="23" minFade="0.08" speedScale="0.5"/>
+            </effectNode>
+            <effectNode effectClass="PlowMotionPathEffect" effectType="PLOW" linkNode="plowEffectBottom02">
+                <motionPathEffect textureFilename="$data/vehicles/kverneland/ecomat/ecomatBottomShareArray.dds" numRows="6" rowLength="23" minFade="0.08" speedScale="0.5"/>
+            </effectNode>
+            <effectNode effectClass="PlowMotionPathEffect" effectType="PLOW" linkNode="plowEffectBottom03">
+                <motionPathEffect textureFilename="$data/vehicles/kverneland/ecomat/ecomatBottomShareArray.dds" numRows="6" rowLength="23" minFade="0.08" speedScale="0.5"/>
+            </effectNode>
+            <effectNode effectClass="PlowMotionPathEffect" effectType="PLOW" linkNode="plowEffectBottom04">
+                <motionPathEffect textureFilename="$data/vehicles/kverneland/ecomat/ecomatBottomShareArray.dds" numRows="6" rowLength="23" minFade="0.08" speedScale="0.5"/>
+            </effectNode>
+            <effectNode effectClass="PlowMotionPathEffect" effectType="PLOW" linkNode="plowEffectBottom05">
+                <motionPathEffect textureFilename="$data/vehicles/kverneland/ecomat/ecomatBottomShareArray.dds" numRows="6" rowLength="23" minFade="0.08" speedScale="0.5"/>
+            </effectNode>
+        </effect>
+        <effect groundReferenceNodeIndex="2" speedThreshold="0">
+            <effectNode effectClass="PlowMotionPathEffect" effectType="PLOW" linkNode="plowEffectTop01">
+                <motionPathEffect textureFilename="$data/vehicles/kverneland/ecomat/ecomatTopShareArray.dds" numRows="6" rowLength="23" minFade="0.08" speedScale="0.5"/>
+            </effectNode>
+            <effectNode effectClass="PlowMotionPathEffect" effectType="PLOW" linkNode="plowEffectTop02">
+                <motionPathEffect textureFilename="$data/vehicles/kverneland/ecomat/ecomatTopShareArray.dds" numRows="6" rowLength="23" minFade="0.08" speedScale="0.5"/>
+            </effectNode>
+            <effectNode effectClass="PlowMotionPathEffect" effectType="PLOW" linkNode="plowEffectTop03">
+                <motionPathEffect textureFilename="$data/vehicles/kverneland/ecomat/ecomatTopShareArray.dds" numRows="6" rowLength="23" minFade="0.08" speedScale="0.5"/>
+            </effectNode>
+            <effectNode effectClass="PlowMotionPathEffect" effectType="PLOW" linkNode="plowEffectTop04">
+                <motionPathEffect textureFilename="$data/vehicles/kverneland/ecomat/ecomatTopShareArray.dds" numRows="6" rowLength="23" minFade="0.08" speedScale="0.5"/>
+            </effectNode>
+            <effectNode effectClass="PlowMotionPathEffect" effectType="PLOW" linkNode="plowEffectTop05">
+                <motionPathEffect textureFilename="$data/vehicles/kverneland/ecomat/ecomatTopShareArray.dds" numRows="6" rowLength="23" minFade="0.08" speedScale="0.5"/>
+            </effectNode>
+        </effect>
+    </workParticles>
+    
+	<foldable>
+        <foldingConfigurations>
+            <foldingConfiguration price="0">
+                <foldingParts startMoveDirection="0" turnOnFoldDirection="-1" detachingMinLimit="0" detachingMaxLimit="0" loweringMaxLimit="0.01">
+                    <foldingPart animationName="foldPlow" speedScale="1"/>
+                </foldingParts>
+                <size widthOffset="0.6"/>
+            </foldingConfiguration>
+        </foldingConfigurations>
+    </foldable>
+    
+	<animations>
+        <animation name="rotatePlow" resetOnStart="false">
+            <part node="rotPart" startTime="1.5" endTime="7.5" startRot="0 0 0" endRot="0 0 -180"/>
+            <part node="backWheelNodeRot" startTime="1.5" endTime="7.5" startRot="-10 0 0" endRot="110 0 0"/>
+            <part node="wheelArmRotX" startTime="1.5" endTime="7.5" startRot="0 0 0" endRot="0 0 74"/>
+            <part node="wheelArmRotXPart01" startTime="1.5" endTime="7.5" startRot="0 0 0" endRot="94 0 0"/>
+            <part node="wheelArmRotXPart02" startTime="1.5" endTime="7.5" startRot="0 0 0" endRot="75 0 0"/>
+            <part node="plowArm" startTime="0.0" endTime="1.5" startRot="0 -5 0" endRot="0 15 0"/>
+            <part node="plowArm" startTime="7.5" endTime="9.0" startRot="0 15 0" endRot="0 -5 0"/>
+            <sound template="hydraulicLayerTone3" startTime="1.49" endTime="7.49" pitchScale="0.6" volumeScale="1.3" fadeIn="0.1"/>
+            <sound template="defaultHydraulicSound" startTime="1.49" endTime="7.49" pitchScale="0.6" volumeScale="2.0" fadeIn="0.1"/>
+            <sound template="defaultHydraulicSound" startTime="0.01" endTime="1.49" pitchScale="0.5" volumeScale="2.8" fadeIn="0.1"/>
+            <sound template="defaultHydraulicSound" startTime="7.51" endTime="8.99" pitchScale="0.5" volumeScale="2.8" fadeIn="0.1"/>
+            <sound template="clackVar1" startTime="7.3" direction="1" pitchScale="1.0" volumeScale="2"/>
+            <sound template="clackVar1" startTime="1.7" direction="-1" pitchScale="1.0" volumeScale="2"/>
+            <sound template="sheetImp02" startTime="1.6" direction="-1" pitchScale="0.8" volumeScale="2"/>
+            <sound template="clackVar1" startTime="7.5" direction="-1" pitchScale="1.2" volumeScale="1.2"/>
+            <sound template="clackVar3" startTime="7.5" direction="-1" pitchScale="0.8" volumeScale="2.5"/>
+            <sound template="clackVar1" startTime="1.5" direction="1" pitchScale="1.2" volumeScale="1.2"/>
+            <sound template="clackVar3" startTime="1.5" direction="1" pitchScale="0.8" volumeScale="2.5"/>
+            <sound template="clackVar4" startTime="8.99" direction="1" pitchScale="2" volumeScale="0.7"/>
+            <sound template="clackVar6" startTime="8.99" direction="1" pitchScale="0.8" volumeScale="1.4"/>
+            <sound template="clackVar3" startTime="0.01" direction="-1" pitchScale="1.2" volumeScale="2"/>
+            <sound template="clackVar4" startTime="0.01" direction="-1" pitchScale="0.6" volumeScale="1.5"/>
+        </animation>
+        <animation name="foldPlow" resetOnStart="false">
+            <part node="plowArm" startTime="0.0" endTime="2.0" startRot="0 -5 0" endRot="0 15 0"/>
+            <part node="rotPart" startTime="2.0" endTime="4.0" startRot="0 0 0" endRot="0 0 -90"/>
+            <sound template="hydraulicLayerTone3" startTime="0.01" endTime="2" pitchScale="0.8" volumeScale="1" fadeIn="0.1"/>
+            <sound template="defaultHydraulicSound" startTime="2" endTime="3.99" pitchScale="0.7" volumeScale="2.0" fadeIn="0.1"/>
+            <sound template="clackVar6" startTime="0.1" direction="-1" pitchScale="0.5" volumeScale="1.1"/>
+            <sound template="clackVar4" startTime="0.1" direction="-1" pitchScale="1.3" volumeScale="1.1"/>
+            <sound template="foldStartMed02" startTime="2" pitchScale="1" volumeScale="2.7"/>
+            <sound template="clackVar6" startTime="3.99" direction="1" pitchScale="0.7" volumeScale="1.6"/>
+            <sound template="foldStartMed02" startTime="3.99" direction="-1" pitchScale="0.7" volumeScale="1.7"/>
+        </animation>
+        <animation name="moveSupport">
+            <part node="supportCol01" startTime="0" endTime="0.5" startTrans="0 0.3 0" endTrans="0 0 0"/>
+            <part node="supportCol02" startTime="0" endTime="0.5" startTrans="0 -0.3 0" endTrans="0 0 0"/>
+            <part node="supportArm" startTime="0" endTime="0.1" startTrans="0 0 0" endTrans="0 0 0.022"/>
+            <part node="supportArm" startTime="0.3" endTime="0.4" startTrans="0 0 0.022" endTrans="0 0 0"/>
+            <part node="supportArm" startTime="0" endTime="0.3" startRot="0 0 90" endRot="0 0 0"/>
+            <sound template="metalClose" startTime="0.1" direction="-1" volumeScale="1.7" pitchScale="2.8" linkNode="attacherJoint"/>
+            <sound template="clackVar1" startTime="0.4" direction="-1" volumeScale="2.3" pitchScale="1.8" linkNode="attacherJoint"/>
+            <sound template="metalClose" startTime="0.4" direction="1" volumeScale="1.7" pitchScale="2.8" linkNode="attacherJoint"/>
+            <sound template="clackVar1" startTime="0.1" direction="1" volumeScale="2.3" pitchScale="1.8" linkNode="attacherJoint"/>
+        </animation>
+    </animations>
+    
+	<cylindered>
+        <movingTools>
+            <movingTool node="rotPart" playSound="true" wheelIndices="1">
+                <dependentPart node="rotPartHydraulic"/>
+            </movingTool>
+            <movingTool node="plowArm" playSound="true" wheelIndices="1">
+                <dependentPart node="plowArmHydraulic"/>
+                <dependentPart node="plow00"/>
+                <dependentPart node="plow01"/>
+                <dependentPart node="plowArmPart"/>
+            </movingTool>
+            <movingTool node="wheelArmRotX" playSound="true" wheelIndices="1">
+                <dependentPart node="wheelArmRotXHydraulic"/>
+            </movingTool>
+        </movingTools>
+        <movingParts>
+            <movingPart node="rotPartHydraulic" referencePoint="rotPartHydraulicRef" referenceFrame="rotPartHydraulicRefFrame">
+                <translatingPart node="rotPartHydraulicPunch"/>
+            </movingPart>
+            <movingPart node="plowArmHydraulic" referencePoint="plowArmHydraulicRef" referenceFrame="plowArmHydraulicRef">
+                <translatingPart node="plowArmHydraulicPunch"/>
+            </movingPart>
+            <movingPart node="plow01" localReferencePoint="plow01Part" referencePoint="plow01PartRef" referenceFrame="plow01RefFrame">
+                <dependentPart node="plow01Part"/>
+                <dependentPart node="widthDisplay"/>
+            </movingPart>
+            <movingPart node="widthDisplay" referencePoint="widthDisplayRef" referenceFrame="widthDisplayRef"/>
+            <movingPart node="plow01Part" referencePoint="plow01PartRef" referenceFrame="plow01PartRef"/>
+            <movingPart node="plow00" localReferencePoint="plowOrientationArm" referencePoint="plowOrientationArmRef" referenceFrame="plow00RefFrame" limitedAxis="1">
+                <dependentPart node="plowOrientationArm"/>
+                <dependentPart node="plow02"/>
+                <dependentPart node="plow03"/>
+                <dependentPart node="plow04"/>
+            </movingPart>
+            <movingPart node="plowOrientationArm" referencePoint="plowOrientationArmRef" referenceFrame="plowOrientationArmRef" limitedAxis="1"/>
+            <movingPart node="plow02" referencePoint="plow02Ref" referenceFrame="plow02Ref"/>
+            <movingPart node="plow03" referencePoint="plow03Ref" referenceFrame="plow03Ref"/>
+            <movingPart node="plow04" referencePoint="plow04Ref" referenceFrame="plow04Ref"/>
+            <movingPart node="wheelArmRotXHydraulic" referencePoint="wheelArmRotXHydraulicRef" referenceFrame="wheelArmRotXHydraulicRef">
+                <translatingPart node="wheelArmRotXHydraulicPunch"/>
+            </movingPart>
+            <movingPart node="plowArmPart" referencePoint="plowArmPartRef" referenceFrame="plowArmPartRef">
+                <translatingPart node="plowArmPartPunch"/>
+            </movingPart>
+        </movingParts>
+    </cylindered>
+    
+	<plow>
+        <plowConfigurations>
+            <plowConfiguration>
+                <rotationPart turnAnimationName="rotatePlow" rotationAllowedIfLowered="false" limitFoldRotationMax="true" foldRotationMinLimit="0" foldRotationMaxLimit="0" rotationFoldMinLimit="0" rotationFoldMaxLimit="0" foldMinLimit="0" foldMaxLimit="0.1"/>
+                <rotateLeftToMax value="true"/>
+                <sounds>
+                    <turn template="DEFAULT_PLOW_TURN" linkNode="pov5xl_main_component1"/>
+                    <work template="DEFAULT_PLOW_WORK" linkNode="pov5xl_main_component1"/>
+                </sounds>
+            </plowConfiguration>
+        </plowConfigurations>
+    </plow>
+    
+	<ai>
+        <needsLowering value="true"/>
+        <collisionTrigger node="aiCollisionNode" width="4" height="2"/>
+        <areaMarkers leftNode="areaMarkerLeft" rightNode="areaMarkerRight" backNode="areaMarkerBack"/>
+        <sizeMarkers leftNode="sizeMarkerLeft" rightNode="sizeMarkerRight" backNode="sizeMarkerBack"/>
+        <hasNoFullCoverageArea value="true"/>
+        <agentAttachment width="2.0" height="2" length="6" lengthOffset="-0.2"/>
+    </ai>
+    
+	<foliageBending>
+        <bendingNode minX="-2.4" maxX="2.6" minZ="-1.5" maxZ="0" yOffset="-0.4" node="plow02Ref"/>
+        <bendingNode minX="-2.4" maxX="2.6" minZ="-1.5" maxZ="0" yOffset="0.4" node="plow02Ref"/>
+    </foliageBending>
+    
+	<baseMaterial>
+        <material name="pov5xl_mat" baseNode="pov5xl_vis">
+            <shaderParameter name="colorMat0" value="AGROMASZ_REDPAINT"/>
+            <shaderParameter name="colorMat1" value="AGROMASZ_GREENPAINT"/>
+        </material>
+    </baseMaterial>
+	
+	<baseMaterialConfigurations  price="500" useDefaultColors="true"  defaultColorIndex="0" title="Base color">
+			<material 						name="pov5xl_mat" shaderParameter="colorMat0"/>
+			
+			<baseMaterialConfiguration name="DennisK Dark Blue" 	color="0.005 0.001 0.533"/>
+			<baseMaterialConfiguration name="DennisK Light Blue" 	color="0.000 0.776 1.000"/>
+			<baseMaterialConfiguration name="DennisK Black" 		color="0 0 0"/>
+			<baseMaterialConfiguration name="Black Matt" 			color="0.015 0.015 0.015" material="23"/>
+			<baseMaterialConfiguration 	name="Agromasz Red" 		color="AGROMASZ_REDPAINT"/>
+			<baseMaterialConfiguration 	name="Agromasz Green" 		color="AGROMASZ_GREENPAINT"/>
+	</baseMaterialConfigurations >
+	
+	<designMaterialConfigurations  price="250" useDefaultColors="true"  defaultColorIndex="37" title="Design color">
+			<material 						name="pov5xl_mat" shaderParameter="colorMat1"/>
+			
+			<designMaterialConfiguration 	name="DennisK Black" 		color="0 0 0"/>
+			<designMaterialConfiguration 	name="DennisK Light Blue" 	color="0.000 0.776 1.000"/>
+			<designMaterialConfiguration 	name="DennisK Dark Blue" 	color="0.005 0.001 0.533"/>
+			<designMaterialConfiguration 	name="Black Matt" 			color="0.015 0.015 0.015" material="23"/>
+			<designMaterialConfiguration 	name="Agromasz Green" 		color="AGROMASZ_GREENPAINT"/>
+			<designMaterialConfiguration 	name="Agromasz Red" 		color="AGROMASZ_REDPAINT"/>
+	</designMaterialConfigurations >
+	
+	<rimColorConfigurations useDefaultColors="true" price="300" defaultColorIndex="0">
+	
+			<rimColorConfiguration 	name="Black Matt" 			color="0.015 0.015 0.015" material="23"/>
+			<rimColorConfiguration 	name="DennisK Light Blue" 	color="0.000 0.776 1.000"/>
+			<rimColorConfiguration 	name="DennisK Dark Blue" 	color="0.005 0.001 0.533"/>
+			<rimColorConfiguration 	name="DennisK Black" 		color="0 0 0"/>
+			<rimColorConfiguration 	name="Agromasz Green" 		color="AGROMASZ_GREENPAINT"/>
+			<rimColorConfiguration 	name="Agromasz Red" 		color="AGROMASZ_REDPAINT"/>
+    </rimColorConfigurations>
+    
+	<wearable wearDuration="480" workMultiplier="5" fieldMultiplier="2"/>
+    
+	<washable dirtDuration="90" washDuration="1" workMultiplier="3" fieldMultiplier="2"/>
+   
+   <i3dMappings>
+        <i3dMapping id="pov5xl_main_component1" node="0>"/>
+        <i3dMapping id="pov5xl_vis" node="0>0"/>
+        <i3dMapping id="attacherJoint" node="0>0|0|0"/>
+        <i3dMapping id="topReferenceNode" node="0>0|0|1"/>
+        <i3dMapping id="rotPart" node="0>0|1|0"/>
+        <i3dMapping id="plowArm" node="0>0|1|0|0"/>
+        <i3dMapping id="plowArmHydraulicRef" node="0>0|1|0|0|0"/>
+        <i3dMapping id="plow01RefFrame" node="0>0|1|0|0|1"/>
+        <i3dMapping id="plow01" node="0>0|1|0|0|1|0"/>
+        <i3dMapping id="plow01Part" node="0>0|1|0|0|1|0|0"/>
+        <i3dMapping id="widthDisplayRef" node="0>0|1|0|0|1|0|0|0"/>
+        <i3dMapping id="plowOrientationArmRef" node="0>0|1|0|0|1|0|1"/>
+        <i3dMapping id="plowEffectBottom02" node="0>0|1|0|0|1|0|2"/>
+        <i3dMapping id="plowEffectTop02" node="0>0|1|0|0|1|0|3"/>
+        <i3dMapping id="plow00RefFrame" node="0>0|1|0|0|2"/>
+        <i3dMapping id="plow00" node="0>0|1|0|0|2|0"/>
+        <i3dMapping id="plowOrientationArm" node="0>0|1|0|0|2|0|0"/>
+        <i3dMapping id="plow02Ref" node="0>0|1|0|0|2|0|0|0"/>
+        <i3dMapping id="plow03Ref" node="0>0|1|0|0|2|0|0|1"/>
+        <i3dMapping id="plow04Ref" node="0>0|1|0|0|2|0|0|2"/>
+        <i3dMapping id="workAreaStart" node="0>0|1|0|0|2|0|1|0"/>
+        <i3dMapping id="workAreaWidth" node="0>0|1|0|0|2|0|1|1"/>
+        <i3dMapping id="plowEffectBottom01" node="0>0|1|0|0|2|0|2"/>
+        <i3dMapping id="plowEffectTop01" node="0>0|1|0|0|2|0|3"/>
+        <i3dMapping id="plow02" node="0>0|1|0|0|3"/>
+        <i3dMapping id="plowEffectBottom03" node="0>0|1|0|0|3|0"/>
+        <i3dMapping id="plowEffectTop03" node="0>0|1|0|0|3|1"/>
+        <i3dMapping id="plow03" node="0>0|1|0|0|4"/>
+        <i3dMapping id="plowEffectBottom04" node="0>0|1|0|0|4|0"/>
+        <i3dMapping id="plowEffectTop04" node="0>0|1|0|0|4|1"/>
+        <i3dMapping id="plow04" node="0>0|1|0|0|5"/>
+        <i3dMapping id="wheelArmRotX" node="0>0|1|0|0|5|0|0"/>
+        <i3dMapping id="wheelArmRotXHydraulicRef" node="0>0|1|0|0|5|0|0|0"/>
+        <i3dMapping id="backWheelNodeRot" node="0>0|1|0|0|5|0|0|1|0"/>
+        <i3dMapping id="backWheelNode" node="0>0|1|0|0|5|0|0|1|0|0"/>
+        <i3dMapping id="wheelArmRotXHydraulic" node="0>0|1|0|0|5|1"/>
+        <i3dMapping id="wheelArmRotXHydraulicPunch" node="0>0|1|0|0|5|1|0"/>
+        <i3dMapping id="wheelArmRotXPart01" node="0>0|1|0|0|5|2|0"/>
+        <i3dMapping id="wheelArmRotXPart02" node="0>0|1|0|0|5|3|0"/>
+        <i3dMapping id="workAreaHeight" node="0>0|1|0|0|5|4|0"/>
+        <i3dMapping id="plowEffectBottom05" node="0>0|1|0|0|5|5"/>
+        <i3dMapping id="plowEffectTop05" node="0>0|1|0|0|5|6"/>
+        <i3dMapping id="supportCol01" node="0>0|1|0|0|6|0"/>
+        <i3dMapping id="supportCol02" node="0>0|1|0|0|6|1"/>
+        <i3dMapping id="areaMarkerLeft" node="0>0|1|0|0|7|0"/>
+        <i3dMapping id="areaMarkerRight" node="0>0|1|0|0|7|1"/>
+        <i3dMapping id="areaMarkerBack" node="0>0|1|0|0|7|2"/>
+        <i3dMapping id="sizeMarkerLeft" node="0>0|1|0|0|7|3"/>
+        <i3dMapping id="sizeMarkerRight" node="0>0|1|0|0|7|4"/>
+        <i3dMapping id="sizeMarkerBack" node="0>0|1|0|0|7|5"/>
+        <i3dMapping id="smokeEmitterBottom" node="0>0|1|0|0|8|0"/>
+        <i3dMapping id="smokeEmitterTop" node="0>0|1|0|0|8|1"/>
+        <i3dMapping id="widthDisplay" node="0>0|1|0|0|11"/>
+        <i3dMapping id="plowArmPartRef" node="0>0|1|0|0|12"/>
+        <i3dMapping id="plowArmHydraulic" node="0>0|1|0|1"/>
+        <i3dMapping id="plowArmHydraulicPunch" node="0>0|1|0|1|0"/>
+        <i3dMapping id="rotPartHydraulicRef" node="0>0|1|0|2"/>
+        <i3dMapping id="plow01PartRef" node="0>0|1|0|3"/>
+        <i3dMapping id="supportArm" node="0>0|1|0|4|0"/>
+        <i3dMapping id="groundReferenceNode" node="0>0|1|0|5|0"/>
+        <i3dMapping id="groundReferenceNodeTop" node="0>0|1|0|5|1"/>
+        <i3dMapping id="groundReferenceNodeBottom" node="0>0|1|0|5|2"/>
+        <i3dMapping id="plowArmPart" node="0>0|1|0|9"/>
+        <i3dMapping id="plowArmPartPunch" node="0>0|1|0|9|0"/>
+        <i3dMapping id="rotPartHydraulicRefFrame" node="0>0|1|1"/>
+        <i3dMapping id="rotPartHydraulic" node="0>0|1|1|0"/>
+        <i3dMapping id="rotPartHydraulicPunch" node="0>0|1|1|0|0"/>
+        <i3dMapping id="hydraulicIn01" node="0>0|1|1|0|1|0"/>
+        <i3dMapping id="hydraulicOut01" node="0>0|1|1|0|1|1"/>
+        <i3dMapping id="aiCollisionNode" node="0>0|2|0"/>
+        <i3dMapping id="hydraulicIn01_detached" node="0>1|1"/>
+        <i3dMapping id="hydraulicIn01_adapter" node="0>1|1|0"/>
+        <i3dMapping id="hydraulicOut01_detached" node="0>1|2"/>
+        <i3dMapping id="hydraulicOut01_adapter" node="0>1|2|0"/>
+    </i3dMappings>
+</vehicle>
